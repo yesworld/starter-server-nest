@@ -1,6 +1,6 @@
 {
   "name": "starter-server-nest",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "It's a starter framework on Nest, with TypeScript support.",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -26,6 +26,8 @@
     "@nestjs/typeorm": "^6.0.0",
     "class-validator": "^0.9.1",
     "dotenv": "^7.0.0",
+    "express-rate-limit": "^3.4.0",
+    "helmet": "^3.16.0",
     "mysql": "^2.16.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
