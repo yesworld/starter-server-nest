@@ -49,6 +49,9 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## TODO
+*[ ] `plainToClass()` doesn't work in ValidationUserPipe
+
 ## License
 
 [MIT License](./LICENSE)

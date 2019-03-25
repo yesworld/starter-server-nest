@@ -1,6 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes } from '@nestjs/common'
 import { UserService } from './user.service'
-import User from '@/entity/user.entity'
+
+import User from '@/user/entity/user.entity'
+import { RegisterUserDTO } from '@/user/dto/register.dto'
+import { IsUserAlreadyExist } from '@/user/pipe/is-user-exist'
 
 @Controller('/users')
 export class UserController {
@@ -13,8 +16,9 @@ export class UserController {
   }
 
   @Post()
-  public createUser(@Body() data: User): Promise<User> {
-    return this.userService.create(data)
+  @UsePipes(IsUserAlreadyExist)
+  public createUser(@Body() userData: RegisterUserDTO): Promise<User> {
+    return this.userService.create(userData)
   }
 
   @Get(':id([0-9]+)')
