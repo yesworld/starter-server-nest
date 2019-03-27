@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
@@ -7,33 +7,42 @@ import { RegisterUserDTO } from '@/user/dto/register.dto'
 
 @Injectable()
 export class UserService {
+
   constructor(
       @InjectRepository(UserEntity)
-      private readonly _userRepository: Repository<UserEntity>,
+      private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   public async findAll(): Promise<UserEntity[]> {
-    return await this._userRepository.find()
+    return await this.userRepository.find()
   }
 
   public async create(dataUser: RegisterUserDTO): Promise<UserEntity> {
-    const user: UserEntity = await this._userRepository.save(dataUser)
+    const user: UserEntity = await this.userRepository.save(dataUser)
     delete user.password
 
     return user
   }
 
   public async findOne(id: number): Promise<UserEntity> {
-    return await this._userRepository.findOne(id)
+    const user = await this.userRepository.findOne(id)
+
+    if (!user) {
+      throw new NotFoundException()
+    }
+
+    return user
   }
 
   public async update(id: number, data: Partial<UserEntity>): Promise<UserEntity> {
-    await this._userRepository.update(id, data)
+    await this.userRepository.update(id, data)
     return await this.findOne(id)
   }
 
   public async destroy(id: number): Promise<void> {
-    await this._userRepository.delete(id)
-    Logger.log(`${id} User has been saved`, 'info')
+    const user = await this.findOne(id)
+    await this.userRepository.delete(id)
+
+    Logger.log(`User {${user.email}} has been deleted`, 'info')
   }
 }

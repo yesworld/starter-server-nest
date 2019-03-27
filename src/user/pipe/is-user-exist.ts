@@ -12,7 +12,7 @@ import UserEntity from '@/user/entity/user.entity'
 
 /**
  * Pipe to validate if a login or/and email are taken.
- * @property _userRepository - The repository for interacting with the users table.
+ * @property userRepository - The repository for interacting with the users table.
  * Example:
  * ```js
  * async register(@Body(IsUserAlreadyExist) userData: RegisterUserDTO) {}
@@ -24,11 +24,11 @@ export class IsUserAlreadyExist implements PipeTransform {
   /**
    * Method to inject the UserRepository for use in the transform method.
    * @constructor
-   * @param _userRepository An instance of the UserRepository, injected by Nest.
+   * @param userRepository An instance of the UserRepository, injected by Nest.
    */
   constructor(
       @InjectRepository(UserEntity)
-      private readonly _userRepository: Repository<UserEntity>,
+      private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   /**
@@ -39,17 +39,16 @@ export class IsUserAlreadyExist implements PipeTransform {
    * @param metadata Nest's Argument Metadata.
    * @returns The original data, if validation has passed.
    */
-  public async transform(userData: RegisterUserDTO, metadata?: ArgumentMetadata) {
+  public async transform(userData: RegisterUserDTO, metadata?: ArgumentMetadata): Promise<RegisterUserDTO> {
 
     const { email, login }: { email: string; login: string } = userData
 
-    const userByLogin: Partial<UserEntity> = await this._userRepository.findOne({ login })
-    const userByEmail: Partial<UserEntity> = await this._userRepository.findOne({ email })
-
+    const userByLogin: Partial<UserEntity> = await this.userRepository.findOne({ login })
     if (userByLogin) {
       throw new ConflictException('This login is already taken.')
     }
 
+    const userByEmail: Partial<UserEntity> = await this.userRepository.findOne({ email })
     if (userByEmail) {
       throw new ConflictException('This email is already in use.')
     }

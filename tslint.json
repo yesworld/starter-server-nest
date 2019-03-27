@@ -32,7 +32,7 @@
       "array-destructuring"
     ],
     "early-exit": true,
-    "no-as-type-assertion": true,
+    "no-as-type-assertion": false,
     "no-accessor-recursion": true,
     "no-collapsible-if": true,
     "no-unnecessary-else": true,

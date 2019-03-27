@@ -1,6 +1,6 @@
 {
   "name": "starter-server-nest",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "It's a starter framework on Nest, with TypeScript support.",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

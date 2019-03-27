@@ -1,6 +1,5 @@
 import {
   ArgumentMetadata,
-  HttpException,
   HttpStatus,
   Injectable,
   NotAcceptableException,
@@ -18,15 +17,25 @@ import { plainToClass } from 'class-transformer'
  * @implements {PipeTransform<any>}
  */
 @Injectable()
-export class ValidationUserPipe implements PipeTransform<any> {
+export class ValidationUserPipe implements PipeTransform<any, any> {
 
-  public async transform(value: any, { metatype }: ArgumentMetadata) {
+  public async transform(value: any, { metatype }: ArgumentMetadata): Promise<any> {
 
     if (!metatype || !this.toValidate(metatype)) {
       return value
     }
 
-    const object = await plainToClass(metatype, value)
+    /**
+     * The current version does not support the ClassTransformOption.excludeExtraneousValues property,
+     * which is already mentioned in the docs.
+     * https://github.com/typestack/class-transformer/issues/236
+     */
+    const optionTransform = {
+      excludeExtraneousValues: true,
+    } as any  // tslint:disable-line
+
+    const object = await plainToClass(metatype, value, optionTransform)
+
     const errors = await validate(object)
     if (errors.length > 0) {
       const error = this.extractPrettyErrors(errors)
@@ -37,25 +46,27 @@ export class ValidationUserPipe implements PipeTransform<any> {
         code: HttpStatus.BAD_REQUEST,
       })
     }
-    return object
+
+    return value
   }
 
   private toValidate(metatype: Type<any>): boolean {
     const types = [String, Boolean, Number, Array, Object]
-    return !types.find((type) => metatype === type)
+    return !types.find((type: any) => metatype === type)
   }
 
-  private extractPrettyErrors(errors: ValidationError[]) {
-    const allErrors = errors.map((x) =>
+  private extractPrettyErrors(errors: ValidationError[]): object[] {
+    const allErrors = errors.map((x: ValidationError) =>
         Object
             .keys(x.constraints)
-            .map((y) => ({
+            .map((y: string) => ({
                   filed: x.property,
                   text: x.constraints[y],
-                })
+                }),
             ),
     )
 
-    return allErrors.reduce((prev, cur) => prev.concat(cur))
+    return allErrors
+        .reduce((prev: any[], cur: any[]) => prev.concat(cur))
   }
 }

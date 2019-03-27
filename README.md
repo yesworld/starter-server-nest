@@ -50,7 +50,7 @@ $ yarn run test:cov
 ```
 
 ## TODO
-*[ ] `plainToClass()` doesn't work in ValidationUserPipe
+* [ ] `plainToClass()` doesn't work in ValidationUserPipe. [Next release](https://github.com/typestack/class-transformer/issues/236)
 
 ## License
 
