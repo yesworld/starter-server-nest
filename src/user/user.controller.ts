@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UsePipes } from '@nestjs/common'
 
 import UserEntity from '@/user/entity/user.entity'
 import { UserService } from './user.service'
-import { RegisterUserDTO } from '@/user/dto/register.dto'
 import { IsUserAlreadyExist } from '@/user/pipe/is-user-exist'
+import { RegisterUserDTO } from '@/user/dto/register.dto'
+import { UpdateUserDTO } from '@/user/dto/update.dto'
 // import { User } from '@/user/user.decorator'
 
 @Controller('/users')
@@ -29,15 +30,14 @@ export class UserController {
     return this.userService.findOne(id)
   }
 
-  @Put(':id([0-9]+)')
-  @UsePipes(IsUserAlreadyExist)
-  public updateUser(@Param('id') id: number, @Body() data: Partial<UserEntity>): Promise<Partial<UserEntity>> {
+  @Patch(':id([0-9]+)')
+  public updateUser(@Param('id') id: number, @Body() data: UpdateUserDTO): Promise<UserEntity> {
     return this.userService.update(id, data)
   }
 
   @Delete(':id([0-9]+)')
+  @HttpCode(204)
   public destroyUser(@Param('id') id: number): Promise<void> {
     return this.userService.destroy(id)
   }
-
 }

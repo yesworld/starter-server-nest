@@ -7,7 +7,7 @@ import {
   Type,
 } from '@nestjs/common'
 import { validate, ValidationError } from 'class-validator'
-import { plainToClass } from 'class-transformer'
+import { plainToClass, classToPlain } from 'class-transformer'
 
 /**
  * Validation pipe which uses class-validator to verify request body models.
@@ -36,7 +36,11 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
 
     const object = await plainToClass(metatype, value, optionTransform)
 
-    const errors = await validate(object)
+    const errors = await validate(object, {
+      whitelist: true,
+      forbidUnknownValues: true,
+    })
+
     if (errors.length > 0) {
       const error = this.extractPrettyErrors(errors)
 
@@ -47,7 +51,7 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
       })
     }
 
-    return value
+    return classToPlain(object)
   }
 
   private toValidate(metatype: Type<any>): boolean {

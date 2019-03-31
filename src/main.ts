@@ -1,13 +1,13 @@
+import { Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { Logger, ValidationPipe } from '@nestjs/common'
 
 // SECURITY PLUGINS
-import * as helmet from 'helmet'
 import * as rateLimit from 'express-rate-limit'
+import * as helmet from 'helmet'
 
+import { ValidationUserPipe } from '@/user/pipe/validation-user.pipe'
 import { AppModule } from '@/app.module'
 import { PORT } from '@/config'
-import { ValidationUserPipe } from '@/user/pipe/validation-user.pipe'
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { cors: true })
@@ -19,9 +19,6 @@ async function bootstrap(): Promise<void> {
     max: 100, // limit each IP to 100 requests per windowMs
   }))
 
-  // app.enableCors()
-
-  // app.useGlobalPipes(new ValidationPipe())
   app.useGlobalPipes(new ValidationUserPipe())
   await app.listen(PORT)
 
