@@ -2,8 +2,8 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import UserEntity from '@/user/entity/user.entity'
 import { RegisterUserDTO } from '@/user/dto/register.dto'
+import { UserEntity } from '@/user/entity/user.entity'
 
 @Injectable()
 export class UserService {
@@ -18,10 +18,13 @@ export class UserService {
   }
 
   public async create(dataUser: RegisterUserDTO): Promise<UserEntity> {
-    const user: UserEntity = await this.userRepository.save(dataUser)
-    delete user.password
+    const user = await this.userRepository.create(dataUser)
+    // user.password = await this.securityService.sign(user)
 
-    return user
+    const savedUser: UserEntity = await this.userRepository.save(user)
+    delete savedUser.password
+
+    return savedUser
   }
 
   public async findOne(id: number): Promise<UserEntity> {
@@ -45,4 +48,28 @@ export class UserService {
 
     Logger.log(`User {${user.email}} has been deleted`, 'info')
   }
+
+  /**
+   * Finds the user by the credentials
+   * @param username
+   * @param password
+   *
+   * TODO: Need compare the password with the hashed?
+   *  bcrypt.compare(attempt, this.password);
+   */
+  public async findByLogin({login, password}: Partial<UserEntity>): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: {
+        login,
+        // password,
+      },
+    })
+
+    if (!user) {
+      throw new NotFoundException()
+    }
+
+    return user
+  }
+
 }

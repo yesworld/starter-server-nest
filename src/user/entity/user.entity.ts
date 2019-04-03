@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, AfterInsert } from 'typeorm'
 import { Logger } from '@nestjs/common'
 
-@Entity()
-export default class User {
+@Entity({ name: 'Users' })
+export class UserEntity {
   @PrimaryGeneratedColumn()
   public id: number
 

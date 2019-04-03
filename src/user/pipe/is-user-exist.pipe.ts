@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
 import { RegisterUserDTO } from '@/user/dto/register.dto'
-import UserEntity from '@/user/entity/user.entity'
+import { UserEntity } from '@/user/entity/user.entity'
 
 /**
  * Pipe to validate if a login or/and email are taken.

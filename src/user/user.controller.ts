@@ -1,11 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards, UsePipes } from '@nestjs/common'
 
-import UserEntity from '@/user/entity/user.entity'
-import { UserService } from './user.service'
-import { IsUserAlreadyExist } from '@/user/pipe/is-user-exist'
+import { IsUserAlreadyExist } from '@/user/pipe/is-user-exist.pipe'
 import { RegisterUserDTO } from '@/user/dto/register.dto'
 import { UpdateUserDTO } from '@/user/dto/update.dto'
-// import { User } from '@/user/user.decorator'
+import { UserEntity } from '@/user/entity/user.entity'
+import { UserService } from '@/user/user.service'
+
+import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard'
 
 @Controller('/users')
 export class UserController {
@@ -15,6 +16,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   public getUsers(): Promise<UserEntity[]> {
     return this.userService.findAll()
   }

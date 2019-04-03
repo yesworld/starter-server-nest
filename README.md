@@ -50,9 +50,10 @@ $ yarn run test:cov
 ```
 
 ## TODO
-* [ ] JWT auth
+* [ ] JWT
+* [ ] Add tests
 * [ ] Add a [rule](https://github.com/marcuzy/tslint-origin-ordered-imports-rule) for Tslint
-* [x] `plainToClass()` doesn't work in ValidationUserPipe. [Next release](https://github.com/typestack/class-transformer/issues/236)
+* [x] `plainToClass()` doesn't work in ValidationUserPipe. [Next release](https://github.com/typestack/class-transformer/issues/236). **Solved** by function `classToPlain()` from the `class-validate`.
 
 ## License
 
