@@ -38,7 +38,7 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
 
     const errors = await validate(object, {
       whitelist: true,
-      forbidUnknownValues: true,
+      // forbidUnknownValues: true,
     })
 
     if (errors.length > 0) {

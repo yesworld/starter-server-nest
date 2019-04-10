@@ -19,7 +19,6 @@ export class UserService {
 
   public async create(dataUser: RegisterUserDTO): Promise<UserEntity> {
     const user = await this.userRepository.create(dataUser)
-    // user.password = await this.securityService.sign(user)
 
     const savedUser: UserEntity = await this.userRepository.save(user)
     delete savedUser.password
@@ -51,17 +50,12 @@ export class UserService {
 
   /**
    * Finds the user by the credentials
-   * @param username
-   * @param password
-   *
-   * TODO: Need compare the password with the hashed?
-   *  bcrypt.compare(attempt, this.password);
+   * @param login
    */
-  public async findByLogin({login, password}: Partial<UserEntity>): Promise<UserEntity> {
+  public async findByLogin(login: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
       where: {
         login,
-        // password,
       },
     })
 

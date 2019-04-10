@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { IsUserAlreadyExist } from './pipe/is-user-exist.pipe'
+
 import { UserEntity } from '@/user/entity/user.entity'
 import { UserService } from '@/user/user.service'
 import { UserController } from '@/user/user.controller'
@@ -9,7 +11,10 @@ import { UserController } from '@/user/user.controller'
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    IsUserAlreadyExist,
+  ],
   controllers: [UserController],
   exports: [UserService],
 })

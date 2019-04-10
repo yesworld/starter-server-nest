@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator'
+import { IsNotEmpty, Matches } from 'class-validator'
 
 /**
  * The DTO for login in a user.
@@ -10,11 +10,6 @@ export class LoginUserDTO {
     message: 'incorrect Login',
   })
   public readonly login: string
-
-  @IsEmail()
-  @IsNotEmpty()
-  @IsOptional()
-  public readonly email: string
 
   @IsNotEmpty({
     message: 'Password must not be empty',

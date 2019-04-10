@@ -32,9 +32,7 @@ export class UserEntity {
   public lastName: string
 
   @Column({
-    length: 30,
     nullable: false,
-    select: false,
   })
   public password: string
 
@@ -43,6 +41,9 @@ export class UserEntity {
     default: () => 'NOW()', // tslint:disable-line
   })
   public dateCreate: Date
+
+  // @Column()
+  // public token: string
 
   @AfterInsert()
   protected afterSave(): void {
