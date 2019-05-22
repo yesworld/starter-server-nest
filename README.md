@@ -20,7 +20,7 @@ OR
 $ yarn
 ```
 
-- Copy and rename `.env.example` to `.env`. Setup database settings inside this file
+- Copy and rename `.env.example` to `.env`. Setup database settings inside this file.
 - If **SyncOrm is false** `TYPEORM_SYNCHRONIZE = false`, then run `yarn run sync` or `npm run sync` command for create tables in your DB.
 
 ## Running the app

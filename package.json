@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:prod": "node dist/main.js",
+    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/main.js",
     "start:dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node -r tsconfig-paths/register ./src/main.ts",
     "start:debug": "nodemon --config nodemon-debug.json",
     "sync": "ts-node ./node_modules/.bin/typeorm schema:sync",
