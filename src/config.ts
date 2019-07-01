@@ -2,9 +2,9 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: '.env' })
 
 const IS_DEV: boolean = process.env.NODE_ENV === 'development'
-const PORT: number =  +process.env.PORT || 3000
+const PORT: number = (process.env.PORT) ? +process.env.PORT : 3000
 const JWT_SECRET: string = process.env.JWT_SECRET || 'pem-file-or-your-secret-beer!'
-const EXPIRES_IN: number = +process.env.EXPIRES_IN || 3600
+const EXPIRES_IN: number = (process.env.EXPIRES_IN) ? +process.env.EXPIRES_IN : 3600
 
 export {
   PORT,

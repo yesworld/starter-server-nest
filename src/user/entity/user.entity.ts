@@ -4,43 +4,43 @@ import { Logger } from '@nestjs/common'
 @Entity({ name: 'Users' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  public id: number
+  public id!: number
 
   @Column({
     length: 30,
     nullable: false,
     unique: true,
   })
-  public login: string
+  public login!: string
 
   @Column({
     length: 100,
     unique: true,
     nullable: false,
   })
-  public email: string
+  public email!: string
 
   @Column({
     length: 80,
   })
-  public firstName: string
+  public firstName!: string
 
   @Column({
     length: 80,
     nullable: true,
   })
-  public lastName: string
+  public lastName!: string
 
   @Column({
     nullable: false,
   })
-  public password: string
+  public password!: string
 
   @Column({
     name: 'date_create',
     default: () => 'NOW()', // tslint:disable-line
   })
-  public dateCreate: Date
+  public dateCreate!: Date
 
   // @Column()
   // public token: string

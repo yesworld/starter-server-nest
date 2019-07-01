@@ -43,12 +43,12 @@ export class IsUserAlreadyExist implements PipeTransform {
 
     const { email, login }: { email: string; login: string } = userData
 
-    const userByLogin: Partial<UserEntity> = await this.userRepository.findOne({ login })
+    const userByLogin = await this.userRepository.findOne({ login })
     if (userByLogin) {
       throw new ConflictException('This login is already taken.')
     }
 
-    const userByEmail: Partial<UserEntity> = await this.userRepository.findOne({ email })
+    const userByEmail = await this.userRepository.findOne({ email })
     if (userByEmail) {
       throw new ConflictException('This email is already in use.')
     }

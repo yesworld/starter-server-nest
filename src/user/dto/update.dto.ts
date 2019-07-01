@@ -10,15 +10,15 @@ export class UpdateUserDTO {
     message: 'incorrect Login',
   })
   @IsOptional()
-  public readonly login: string
+  public readonly login!: string
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  public readonly firstName: string
+  public readonly firstName!: string
 
   @IsOptional()
-  public readonly lastName: string
+  public readonly lastName!: string
 
   @IsNotEmpty({
     message: 'Password must not be empty',
@@ -27,5 +27,5 @@ export class UpdateUserDTO {
     message: 'incorrect Password',
   })
   @IsOptional()
-  public readonly password: string
+  public readonly password!: string
 }

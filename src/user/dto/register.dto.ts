@@ -9,17 +9,17 @@ export class RegisterUserDTO {
   @Matches(/^[a-z0-9\-_]{5,20}$/i, {
     message: 'incorrect Login',
   })
-  public readonly login: string
+  public readonly login!: string
 
   @IsEmail()
   @IsNotEmpty()
-  public readonly email: string
+  public readonly email!: string
 
   @IsString()
   @IsNotEmpty()
-  public readonly firstName: string
+  public readonly firstName!: string
 
-  public readonly lastName: string
+  public readonly lastName!: string
 
   @IsNotEmpty({
     message: 'Password must not be empty',
@@ -27,6 +27,6 @@ export class RegisterUserDTO {
   @Matches(/^[a-z0-9\-_!@#$%]{5,20}$/i, {
     message: 'incorrect Password',
   })
-  public readonly password: string
+  public readonly password!: string
 
 }
