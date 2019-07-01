@@ -14,7 +14,7 @@ import { AuthService } from './auth.service'
     UserModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secretOrPrivateKey: JWT_SECRET,
+      secret: JWT_SECRET,
       signOptions: {
         expiresIn: EXPIRES_IN,
       },

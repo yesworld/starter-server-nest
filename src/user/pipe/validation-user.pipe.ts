@@ -29,12 +29,12 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
      * The current version does not support the ClassTransformOption.excludeExtraneousValues property,
      * which is already mentioned in the docs.
      * https://github.com/typestack/class-transformer/issues/236
-     */
     const optionTransform = {
       excludeExtraneousValues: true,
     } as any  // tslint:disable-line
+     */
 
-    const object = await plainToClass(metatype, value, optionTransform)
+    const object = await plainToClass(metatype, value)
 
     const errors = await validate(object, {
       whitelist: true,
