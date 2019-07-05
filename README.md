@@ -12,7 +12,7 @@ It's a starter framework on [Nest](https://github.com/nestjs/nest), with **TypeS
 ## Description
 A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>
 
-## Installation
+## Installation :speech_balloon:
 
 ```bash
 $ npm i
@@ -20,8 +20,10 @@ OR
 $ yarn
 ```
 
+- Create a DB mysql. 
 - Copy and rename `.env.example` to `.env`. Setup database settings inside this file.
 - If **SyncOrm is false** `TYPEORM_SYNCHRONIZE = false`, then run `yarn run sync` or `npm run sync` command for create tables in your DB.
+- Add an admin to the table **Users** 
 
 ## Running the app
 
@@ -49,7 +51,7 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## TODO
+## :suspect: TODO
 * [x] JWT
 * [ ] Add tests
 * [ ] Add a [rule](https://github.com/marcuzy/tslint-origin-ordered-imports-rule) for Tslint

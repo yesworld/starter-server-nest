@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common'
+import {Logger, ValidationPipe} from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 
 // SECURITY PLUGINS
@@ -7,7 +7,6 @@ import * as rateLimit from 'express-rate-limit'
 // @ts-ignore
 import * as helmet from 'helmet'
 
-import { ValidationUserPipe } from '@/user/pipe/validation-user.pipe'
 import { AppModule } from '@/app.module'
 import { PORT } from '@/config'
 
@@ -22,7 +21,9 @@ async function bootstrap(): Promise<void> {
     max: 100, // limit each IP to 100 requests per windowMs
   }))
 
-  app.useGlobalPipes(new ValidationUserPipe())
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true
+  }))
   await app.listen(PORT)
 
   Logger.log(`Server running on http://localhost:${PORT}/`, 'Info')

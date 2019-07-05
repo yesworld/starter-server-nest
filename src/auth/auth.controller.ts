@@ -14,5 +14,4 @@ export class AuthController {
     const token = await this.authService.createToken(credentials)
     return { token }
   }
-
 }

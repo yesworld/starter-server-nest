@@ -12,6 +12,7 @@ import { plainToClass, classToPlain } from 'class-transformer'
 /**
  * Validation pipe which uses class-validator to verify request body models.
  * Similar to the default NestJS validation pipe but parses errors into nicer format.
+ * @example in the main.ts add: app.useGlobalPipes(new ValidationUserPipe())
  * @export
  * @class ValidationUserPipe
  * @implements {PipeTransform<any>}
@@ -41,17 +42,17 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
       // forbidUnknownValues: true,
     })
 
-    if (errors.length > 0) {
-      const error = this.extractPrettyErrors(errors)
-
-      throw new NotAcceptableException({
-        message: 'Validation failed.',
-        errors: error,
-        code: HttpStatus.BAD_REQUEST,
-      })
+    if (errors.length == 0) {
+      return classToPlain(object)
     }
 
-    return classToPlain(object)
+    const error = this.extractPrettyErrors(errors)
+
+    throw new NotAcceptableException({
+      message: 'Validation failed.',
+      errors: error,
+      code: HttpStatus.BAD_REQUEST,
+    })
   }
 
   private toValidate(metatype: Type<any>): boolean {
