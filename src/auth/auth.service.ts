@@ -10,10 +10,9 @@ import { UserService } from '@/user/user.service'
  */
 @Injectable()
 export class AuthService {
-
   constructor(
-      private readonly userService: UserService,
-      private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
   ) {}
 
   public async createToken(userData: LoginUserDTO): Promise<string> {
@@ -24,13 +23,13 @@ export class AuthService {
       throw new NotFoundException()
     }
 
-    return await this.jwtService.sign({id: user.id})
+    return await this.jwtService.sign({ id: user.id })
   }
 
   /**
    * Finds a user by the token they supply.
    */
-  public async validateUser(payload: {id: number}): Promise<any> {
+  public async validateUser(payload: { id: number }): Promise<any> {
     return await this.userService.findOne(payload.id)
   }
 }

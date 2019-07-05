@@ -19,9 +19,7 @@ import { plainToClass, classToPlain } from 'class-transformer'
  */
 @Injectable()
 export class ValidationUserPipe implements PipeTransform<any, any> {
-
   public async transform(value: any, { metatype }: ArgumentMetadata): Promise<any> {
-
     if (!metatype || !this.toValidate(metatype)) {
       return value
     }
@@ -62,16 +60,12 @@ export class ValidationUserPipe implements PipeTransform<any, any> {
 
   private extractPrettyErrors(errors: ValidationError[]): object[] {
     const allErrors = errors.map((x: ValidationError) =>
-        Object
-            .keys(x.constraints)
-            .map((y: string) => ({
-                  filed: x.property,
-                  text: x.constraints[y],
-                }),
-            ),
+      Object.keys(x.constraints).map((y: string) => ({
+        filed: x.property,
+        text: x.constraints[y],
+      })),
     )
 
-    return allErrors
-        .reduce((prev: any[], cur: any[]) => prev.concat(cur))
+    return allErrors.reduce((prev: any[], cur: any[]) => prev.concat(cur))
   }
 }

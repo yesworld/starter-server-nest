@@ -3,7 +3,6 @@ import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class PasswordHash implements PipeTransform {
-
   /**
    * Hashes the password.
    * @async
@@ -12,7 +11,9 @@ export class PasswordHash implements PipeTransform {
    * @returns The object with the hashed password.
    */
   public async transform(value: any, metadata?: ArgumentMetadata) {
-    if (value === null) { return value }
+    if (value === null) {
+      return value
+    }
 
     if (typeof value === 'string') {
       value = { password: value }

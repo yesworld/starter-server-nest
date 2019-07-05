@@ -9,7 +9,8 @@ import { Request } from 'express'
  * async getUser(@UserBody() user: UserEntity): Promise<void> {}
  * ```
  */
-export const UserBody = createParamDecorator((data: any, req: Request): UserEntity => {
-  return req.user
-})
-
+export const UserBody = createParamDecorator(
+  (data: any, req: Request): UserEntity => {
+    return req.user
+  },
+)

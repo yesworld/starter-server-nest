@@ -20,15 +20,14 @@ import { UserEntity } from '@/user/entity/user.entity'
  */
 @Injectable()
 export class IsUserAlreadyExist implements PipeTransform {
-
   /**
    * Method to inject the UserRepository for use in the transform method.
    * @constructor
    * @param userRepository An instance of the UserRepository, injected by Nest.
    */
   constructor(
-      @InjectRepository(UserEntity)
-      private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   /**
@@ -39,8 +38,10 @@ export class IsUserAlreadyExist implements PipeTransform {
    * @param metadata Nest's Argument Metadata.
    * @returns The original data, if validation has passed.
    */
-  public async transform(userData: RegisterUserDTO, metadata?: ArgumentMetadata): Promise<RegisterUserDTO> {
-
+  public async transform(
+    userData: RegisterUserDTO,
+    metadata?: ArgumentMetadata,
+  ): Promise<RegisterUserDTO> {
     const { email, login }: { email: string; login: string } = userData
 
     const userByLogin = await this.userRepository.findOne({ login })

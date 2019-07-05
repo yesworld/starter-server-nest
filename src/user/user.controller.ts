@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards, UsePipes } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common'
 
 import { IsUserAlreadyExist } from '@/user/pipe/is-user-exist.pipe'
 import { PasswordHash } from '@/user/pipe/password-hash.pipe'
@@ -12,10 +23,7 @@ import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard'
 
 @Controller('/users')
 export class UserController {
-
-  constructor(
-      private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
@@ -35,7 +43,10 @@ export class UserController {
   }
 
   @Patch(':id([0-9]+)')
-  public updateUser(@Param('id') id: number, @Body() data: UpdateUserDTO): Promise<UserEntity> {
+  public updateUser(
+    @Param('id') id: number,
+    @Body() data: UpdateUserDTO,
+  ): Promise<UserEntity> {
     return this.userService.update(id, data)
   }
 

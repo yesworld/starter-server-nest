@@ -7,10 +7,9 @@ import { UserEntity } from '@/user/entity/user.entity'
 
 @Injectable()
 export class UserService {
-
   constructor(
-      @InjectRepository(UserEntity)
-      private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   public async findAll(): Promise<UserEntity[]> {
@@ -65,5 +64,4 @@ export class UserService {
 
     return user
   }
-
 }

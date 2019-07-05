@@ -20,10 +20,7 @@ import { AuthService } from './auth.service'
     }),
     UserModule,
   ],
-  providers: [
-    AuthService,
-    JwtStrategy,
-  ],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

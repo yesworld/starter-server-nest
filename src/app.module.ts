@@ -6,11 +6,7 @@ import { AuthModule } from '@/auth/auth.module'
 import { UserModule } from '@/user/user.module'
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot(),
-    UserModule,
-    AuthModule,
-  ],
+  imports: [TypeOrmModule.forRoot(), UserModule, AuthModule],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}

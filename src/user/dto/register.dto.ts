@@ -4,7 +4,6 @@ import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator'
  * The DTO for registering a user.
  */
 export class RegisterUserDTO {
-
   @IsNotEmpty()
   @Matches(/^[a-z0-9\-_]{5,20}$/i, {
     message: 'incorrect Login',
@@ -28,5 +27,4 @@ export class RegisterUserDTO {
     message: 'incorrect Password',
   })
   public readonly password!: string
-
 }
